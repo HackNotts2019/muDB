@@ -12,7 +12,7 @@ class Interpreter:
             self._evaluate(tokens)
 
     def _tokenize(self, expression):
-        return expression.replace('(', ' ( ').replace(')', ' ) ').replace('*', ' * ').split()
+        return expression.replace('(', ' ( ').replace(')', ' ) ').replace('*', ' * ').replace(',', ' , ').split()
 
     def _evaluate(self, tokens):
         if (tokens[0].upper() == 'USE'):
