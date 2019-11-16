@@ -21,7 +21,7 @@ class Interpreter:
             if (tokens[1].upper() == 'DATABASE'):
                 self._dbm.create_database(tokens[2])
             elif (tokens[1].upper() == 'TABLE'):
-                self._dbm.create_table(tokens[2], tokens[4], tokens[6])
+                self._dbm.create_table(tokens[2])
             else:
                 self._syntax_error()
         elif (tokens[0].upper() == 'DROP'):
@@ -50,7 +50,7 @@ class Interpreter:
                 self._syntax_error()
         elif (tokens[0].upper() == 'SELECT'):
             if (tokens[1] == '*'):
-                self._dbm.select_all(tokens[3])
+                print(self._dbm.select_all(tokens[3]))
             else:
                 self._dbm.select_by_key(tokens[1], tokens[3])
         elif (tokens[0].upper() == 'INSERT'):

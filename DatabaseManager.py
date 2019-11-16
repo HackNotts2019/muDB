@@ -1,42 +1,51 @@
 import os
-from FileManager import FileManager,create_database_file
+from FileManager import FileManager
 
 class DatabaseManager:
-    
     def __init__(self):
         self._fm = None
     # Database methods #
     def create_database(self,pathName):
-        create_database_file(pathName)
+        FileManager.create_database_file(pathName)
+
     def select_database(self,databasePath):
         self._fm = FileManager(databasePath)
-    def drop_database(self,databasePath): #if you are dropping other than current database
+
+    def drop_database(self,databasePath):
         fm = FileManager(databasePath)
         fm.delete_db_file()
-    def close_database(self):
-        self._fm = None #hopefully this does garbage collection in FileManager Class
+
     def rename_database(self,_oldFilePath,_newFilePath):
         self._fm.rename_db_file(_oldFilePath,_newFilePath)
+
     def list_tables(self):
         self._fm.list_tables()
+
     # Table methods #
-    def create_table(self,table_name,key_size,val_size):
-        self._fm.add_table(table_name,key_size,val_size)
+    def create_table(self,table_name):
+        self._fm.add_table(table_name)
+
     def drop_table(self,table_name):
         pass
+
     def rename_table(self,old_name,new_name):
         pass
+
     # Data manipulation methods #
     def select_all(self,table_name):
-        pass
+        return self._fm.return_table(table_name)
+
     def select_by_key(self,key,table_name):
         pass
+
     def insert(self,key,value,table_name):
-        pass
+        self._fm.insert(key, value, table_name)
+
     def remove_all(self,table_name):
         pass
+
     def remove_by_key(self,table_name,key_name):
         pass
+
     def update_by_key(self,key,table_name,value):
         pass
-
