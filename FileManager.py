@@ -1,33 +1,12 @@
 import os
-import random
-
-def create_database_file(databasePath):
-        with open(databasePath, "ab"):
-            pass
 
 class FileManager:
-    # "private members"
-    #
-
     def __init__(self,databasePath):
-        self._DELIMITER = bytearray((str("i")*128), 'utf-8')
         self._databasePath = databasePath
-        self._open_db_file()
 
-    def _open_db_file(self):
-        self._prepare_db_file()
-
-    def _prepare_db_file(self):
-        isFileEmpty = False
-        with open(self._databasePath, "rb") as f:
-            first_char = f.read(1)
-            if not first_char:
-               isFileEmpty = True
-
-        if(isFileEmpty):
-            with open(self._databasePath, "ab") as f:
-                f.seek(0)
-                f.write(self._DELIMITER)
+    def create_database_file(databasePath):
+        with open(databasePath, "ab"):
+            pass
 
     def delete_db_file(self):
         os.remove(self._databasePath)
