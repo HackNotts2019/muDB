@@ -1,18 +1,23 @@
+import os
+from FileManager import FileManager
+
 class DatabaseManager:
-    # "privates"
     
-    #
-    def __init__(self,databasePath):
-        self._select_database(databasePath)
+    def __init__(self):
+        self._fm = None
     # Database methods #
-    def _select_database(self,_databasePath):
-        pass
-    def create_database(self):
-        pass
-    def drop_database(self):
-        pass
-    def rename_database(self):
-        pass
+    def select_database(self,databasePath):
+        self._fm = FileManager(databasePath)
+    def _create_database(self,databasePath):
+        self._fm = FileManager(databasePath)
+    def drop_database(self,databasePath): #if you are dropping other than current database
+        fm = FileManager(databasePath)
+        fm.delete_db_file()
+    def close_database(self):
+        self._fm._close_db_file() #just to be sure
+        self._fm = None #hopefully this does garbage collection in FileManager Class
+    def rename_database(self,_oldFilePath,_newFilePath):
+        self._fm.rename_db_file(_oldFilePath,_newFilePath)
     def list_tables(self):
         pass
     # Table methods #
