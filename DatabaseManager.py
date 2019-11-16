@@ -1,7 +1,12 @@
 class DatabaseManager:
-    def __init__(self):
-        pass
+    # "privates"
+    
+    #
+    def __init__(self,databasePath):
+        self._select_database(databasePath)
     # Database methods #
+    def _select_database(self,_databasePath):
+        pass
     def create_database(self):
         pass
     def drop_database(self):
