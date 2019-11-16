@@ -1,6 +1,5 @@
 import os
 import random
-import pickle
 
 def create_database_file(databasePath):
         with open(databasePath, "ab"):
@@ -38,27 +37,7 @@ class FileManager:
         self._databasePath = _newFilePath
 
     def add_table(self,table_name,key_size,val_size):
-        data = None
-        with open(self._databasePath, "rb") as f:
-            data = [d for d in f.read().partition(self._DELIMITER) if d]
+        pass
 
-            for datum in data:
-                if datum == self._DELIMITER:
-                    data.remove(datum)
-
-            header = []
-
-            if (data != []):
-                print(data)
-                header = pickle.loads(data[0])
-
-            pickled_header = pickle.dumps(header.append((table_name, key_size, val_size)))
-            if len(data) == 0:
-                data.append(pickled_header)
-            else:
-                data[0] = pickled_header
-
-        with open(self._databasePath, "wb") as f:
-            for datum in data:
-                f.write(datum)
-                f.write(self._DELIMITER)
+    def list_tables(self):
+        pass

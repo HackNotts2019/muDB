@@ -18,7 +18,7 @@ class DatabaseManager:
     def rename_database(self,_oldFilePath,_newFilePath):
         self._fm.rename_db_file(_oldFilePath,_newFilePath)
     def list_tables(self):
-        pass
+        self._fm.list_tables()
     # Table methods #
     def create_table(self,table_name,key_size,val_size):
         self._fm.add_table(table_name,key_size,val_size)
