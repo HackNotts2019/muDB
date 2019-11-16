@@ -37,24 +37,14 @@ class FileManager:
         self._databasePath = _newFilePath
     
     def add_table(self,table_name,key_size,val_size):
-        #if header is empty, create one 
-        # array of tuples (table_name,key_size,val_size)
         data = None
         with open(self._databasePath, "ab+") as f:
             #check if is header empty
             f.seek(0)
+            print(type(f.read()))
             data = [d for d in f.read().partition(self._DELIMITER) if d]
-            #header is first, each other member is another table
-            #print(data[0])
-        header = list(data[0])
-        header.append((table_name,key_size,val_size))
-        header = bytearray(header)
-        data[0] = header
-        with open(self._databasePath, "wb") as f:
-            for datum in data:
-                f.write(datum)
-                f.write(self._DELIMITER)
-
+            print(data)
+        
         
 
 
