@@ -4,6 +4,7 @@ from FileManager import FileManager
 class DatabaseManager:
     def __init__(self):
         self._fm = None
+
     # Database methods #
     def create_database(self,pathName):
         FileManager.create_database_file(pathName)
@@ -29,26 +30,26 @@ class DatabaseManager:
         self._fm.add_table(table_name)
 
     def drop_table(self,table_name):
-        pass
+        self._fm.drop_table(table_name)
 
     def rename_table(self,old_name,new_name):
-        pass
+        self._fm.rename_table(old_name, new_name)
 
     # Data manipulation methods #
     def select_all(self,table_name):
         return self._fm.return_table(table_name)
 
     def select_by_key(self,key,table_name):
-        pass
+        return self._fm.select_by_key(key, table_name)
 
     def insert(self,key,value,table_name):
         self._fm.insert(key, value, table_name)
 
     def remove_all(self,table_name):
-        pass
+        self._fm.remove_all(table_name)
 
     def remove_by_key(self,table_name,key_name):
-        pass
+        self._fm.remove_by_key(table_name, key_name)
 
     def update_by_key(self,key,table_name,value):
-        pass
+        self._fm.update_by_key(key, table_name, value)

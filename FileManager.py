@@ -31,7 +31,61 @@ class FileManager:
         with open(self._database_path, "rb") as f:
             return msgpack.unpackb(f.read(), raw = False)[table_name]
 
+    def rename_table(self, old_name, new_name):
+        database = {}
+
+        with open(self._database_path, "rb") as f:
+            database = msgpack.unpackb(f.read(), raw = False)
+            database[new_name] = database.pop(old_name)
+
+        with open(self._database_path, "wb") as f:
+            f.write(msgpack.packb(database, use_bin_type = True))
+
+    def drop_table(self, table_name):
+        database = {}
+
+        with open(self._database_path, "rb") as f:
+            database = msgpack.unpackb(f.read(), raw = False)
+            del database[table_name]
+
+        with open(self._database_path, "wb") as f:
+            f.write(msgpack.packb(database, use_bin_type = True))
+
     def insert(self, key, value, table_name):
+        database = {}
+
+        with open(self._database_path, "rb") as f:
+            database = msgpack.unpackb(f.read(), raw = False)
+            database[table_name][key] = value
+
+        with open(self._database_path, "wb") as f:
+            f.write(msgpack.packb(database, use_bin_type = True))
+
+    def select_by_key(self, key, table_name):
+        with open(self._database_path, "rb") as f:
+            return msgpack.unpackb(f.read(), raw = False)[table_name][key]
+
+    def remove_all(self, table_name):
+        database = {}
+
+        with open(self._database_path, "rb") as f:
+            database = msgpack.unpackb(f.read(), raw = False)
+            database[table_name] = {}
+
+        with open(self._database_path, "wb") as f:
+            f.write(msgpack.packb(database, use_bin_type = True))
+
+    def remove_by_key(self, table_name, key_name):
+        database = {}
+
+        with open(self._database_path, "rb") as f:
+            database = msgpack.unpackb(f.read(), raw = False)
+            del database[table_name][key]
+
+        with open(self._database_path, "wb") as f:
+            f.write(msgpack.packb(database, use_bin_type = True))
+
+    def update_by_key(self, key, table_name, value):
         database = {}
 
         with open(self._database_path, "rb") as f:
