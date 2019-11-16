@@ -45,7 +45,7 @@ class Interpreter:
                 self._syntax_error()
         elif (tokens[0].upper() == 'CLOSE'):
             if (tokens[1].upper() == 'DATABASE'):
-                self._dbm.close_database();
+                self._dbm.close_database()
             else:
                 self._syntax_error()
         elif (tokens[0].upper() == 'SELECT'):
@@ -54,7 +54,7 @@ class Interpreter:
             else:
                 self._dbm.select_by_key(tokens[1], tokens[3])
         elif (tokens[0].upper() == 'INSERT'):
-            self.dmb.insert(tokens[2], tokens[4], tokens[7])
+            self._dbm.insert(tokens[2], tokens[4], tokens[7])
         elif (tokens[0].upper() == 'UPDATE'):
             self._dbm.update_by_key(tokens[1], tokens[3], tokens[5])
         elif (tokens[0].upper() == 'REMOVE'):
