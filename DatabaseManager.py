@@ -21,7 +21,7 @@ class DatabaseManager:
         pass
     # Table methods #
     def create_table(self,table_name,key_size,val_size):
-        pass
+        self._fm.add_table(table_name,key_size,val_size)
     def drop_table(self,table_name):
         pass
     def rename_table(self,old_name,new_name):
