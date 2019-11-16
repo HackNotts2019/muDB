@@ -21,6 +21,9 @@ class DatabaseManager:
     def list_tables(self):
         self._fm.list_tables()
 
+    def close_database(self):
+        self._fm = None
+
     # Table methods #
     def create_table(self,table_name):
         self._fm.add_table(table_name)
