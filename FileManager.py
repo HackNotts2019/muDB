@@ -10,11 +10,16 @@ class FileManager:
             pass
 
     def delete_db_file(self):
-        os.remove(self._database_path)
+        try:
+            os.remove(self._database_path)
+        except:
+            print("File ",self._database_path," cannot be found")
 
-    def rename_db_file(self,_oldFilePath,_newFilePath):
-        os.rename(_oldFilePath,_newFilePath)
-        self._database_path = _newFilePath
+    def rename_db_file(_oldFilePath,_newFilePath):
+        try:
+            os.rename(_oldFilePath,_newFilePath)
+        except:
+            print("Unable to rename database")
 
     def add_table(self,table_name):
         database = {}
@@ -33,20 +38,29 @@ class FileManager:
 
     def rename_table(self, old_name, new_name):
         database = {}
+        try:
+            with open(self._database_path, "rb") as f:
+                database = msgpack.unpackb(f.read(), raw = False)
+                try:
+                    database[new_name] = database.pop(old_name)
+                except:
+                    print("Unable to rename table. ",old_name," is not present on selected database")
+        
+            with open(self._database_path, "wb") as f:
+                f.write(msgpack.packb(database, use_bin_type = True))
 
-        with open(self._database_path, "rb") as f:
-            database = msgpack.unpackb(f.read(), raw = False)
-            database[new_name] = database.pop(old_name)
-
-        with open(self._database_path, "wb") as f:
-            f.write(msgpack.packb(database, use_bin_type = True))
+        except:
+            print("Unable to rename table")
 
     def drop_table(self, table_name):
         database = {}
 
         with open(self._database_path, "rb") as f:
             database = msgpack.unpackb(f.read(), raw = False)
-            del database[table_name]
+            try:
+                del database[table_name]
+            except(Exception):
+                print("Table ",table_name," not present in database")
 
         with open(self._database_path, "wb") as f:
             f.write(msgpack.packb(database, use_bin_type = True))
@@ -63,7 +77,10 @@ class FileManager:
 
     def select_by_key(self, key, table_name):
         with open(self._database_path, "rb") as f:
-            return msgpack.unpackb(f.read(), raw = False)[table_name][key]
+            try:
+                return msgpack.unpackb(f.read(), raw = False)[table_name][key]
+            except:
+                print("Key not present in database")
 
     def remove_all(self, table_name):
         database = {}
@@ -80,7 +97,7 @@ class FileManager:
 
         with open(self._database_path, "rb") as f:
             database = msgpack.unpackb(f.read(), raw = False)
-            del database[table_name][key]
+            del database[table_name][key_name]
 
         with open(self._database_path, "wb") as f:
             f.write(msgpack.packb(database, use_bin_type = True))
