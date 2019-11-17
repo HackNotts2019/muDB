@@ -92,13 +92,13 @@ class FileManager:
         with open(self._database_path, "wb") as f:
             f.write(msgpack.packb(database, use_bin_type = True))
 
-    def remove_by_key(self, table_name, key_name):
+    def remove_by_key(self, key_name, table_name):
         database = {}
 
         with open(self._database_path, "rb") as f:
             database = msgpack.unpackb(f.read(), raw = False)
             del database[table_name][key_name]
-
+            
         with open(self._database_path, "wb") as f:
             f.write(msgpack.packb(database, use_bin_type = True))
 
